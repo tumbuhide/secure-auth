@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  # You can add other Supabase services here like auth, storage, etc.
+  # For now, we'll focus on the database and auth.
+  auth:
+    image: supabase/gotrue:v2.100.0 # Use a specific version for stability
+    restart: always
+    environment:
+      GOTRUE_API_EXTERNAL_URL: ${SUPABASE_URL}
+      GOTRUE_DB_DRIVER: postgres
+      GOTRUE_DB_DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      GOTRUE_JWT_SECRET: ${JWT_SECRET}
+      GOTRUE_SITE_URL: ${SITE_URL}
+      GOTRUE_DISABLE_SIGNUP: "false"
+      GOTRUE_EMAIL_ENABLE_CONFIRMATIONS: "true"
+      # Email SMTP settings (fill these in your .env)
+      GOTRUE_SMTP_HOST: ${SMTP_HOST}
+      GOTRUE_SMTP_PORT: ${SMTP_PORT}
+      GOTRUE_SMTP_USER: ${SMTP_USER}
+      GOTRUE_SMTP_PASS: ${SMTP_PASS}
+      GOTRUE_SMTP_SENDER: ${SMTP_SENDER}
+    depends_on:
+      - db
+    ports:
+      - "9999:9999" # GoTrue API port
+
+volumes:
+  db-data:

@@ -1,0 +1,19 @@
+# robots.txt for Secure Auth
+
+User-agent: *
+Allow: /
+
+# Disallow all authentication and user-specific pages
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /auth/
+Disallow: /dashboard/
+Disallow: /admin/
+
+# Disallow all API routes
+Disallow: /api/
+
+# Optional: Point to sitemap
+Sitemap: https://join.tumbuhide.tech/sitemap.xml
