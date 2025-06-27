@@ -1,0 +1,11 @@
+baca readme.md
+
+baca semua file .md pada folder docs [semuanya]
+
+baca ai.md
+
+baca latest.md
+
+dan baca schema di folder database/migrations
+
+jika sudah, kabari saya. dengan begitu km bisa memahami keseluruhan project saya!
